@@ -7,22 +7,45 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UpdateIcon from '@mui/icons-material/Update'
 import { useNavigate } from 'react-router-dom'
 
+function useDebounce(value,delay){
+    let [debouncedValue,setDebouncedValue] = useState("")
+    useEffect(()=>{
+      let handler = setTimeout(()=>{
+        setDebouncedValue(value)
+      },delay)
+      return ()=>{
+        clearTimeout(handler)
+      };
+    },[value,delay])
+    return debouncedValue
+}
+
 const Redux = () => {
   let [data, setData] = useState([])
   let [noData, setNoData] = useState("")
   let [name, setName] = useState("")
   let navigate = useNavigate()
   let dispatch = useDispatch()
+  let debouncedSearchTerm = useDebounce(name, 1000);
 
   useEffect(() => {
-    dispatch(fetchStudent())
-      .then(payload => setData(payload.payload))
-      .catch(error => console.log(error))
-
-    dispatch(findStudentName({ name }))
-      .then(payload => setData(payload.payload))
-      .catch(error => console.log(error))
-  }, [dispatch, name])
+    if (debouncedSearchTerm) {
+      dispatch(findStudentName({ name: debouncedSearchTerm }))
+        .then(payload => {
+          setData(payload.payload);
+          setCount(payload.payload.length);
+        })
+        .catch(error => console.log(error));
+    } else {
+      dispatch(fetchStudent())
+        .then(payload => {
+          console.log(payload.payload);
+          setData(payload.payload);
+          setCount(payload.payload.length);
+        })
+        .catch(error => console.log(error));
+    }
+  }, [debouncedSearchTerm, dispatch]);
 
   let [orderBy, setOrderBy] = useState('');
   let [order, setOrder] = useState('asc');
