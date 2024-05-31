@@ -23,6 +23,7 @@ function useDebounce(value,delay){
 const Redux = () => {
   let [data, setData] = useState([])
   let [noData, setNoData] = useState("")
+  let [count,setCount] = useState(0)
   let [name, setName] = useState("")
   let navigate = useNavigate()
   let dispatch = useDispatch()
