@@ -36,8 +36,8 @@ export const findByIdStudent = ({ id }) => {
     return dispatch => {
         dispatch(action.findStudentByIdRequest())
         return axios.get(`${LOCALHOST}/findById?id=${id}`)
-            .then(payload => dispatch(action.indStudentByIdSuccess(payload.data)))
-            .catch(error => dispatch(action.indStudentByIdFailure(error.message)))
+            .then(payload => dispatch(action.findStudentByIdSuccess(payload.data)))
+            .catch(error => dispatch(action.findStudentByIdFailure(error.message)))
     }
 }
 

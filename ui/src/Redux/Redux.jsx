@@ -46,7 +46,7 @@ const Redux = () => {
         })
         .catch(error => console.log(error));
     }
-  }, [debouncedSearchTerm, dispatch,<AddStudent></AddStudent>]);
+  }, [debouncedSearchTerm, dispatch]);
 
   let [orderBy, setOrderBy] = useState('');
   let [order, setOrder] = useState('asc');
@@ -151,7 +151,7 @@ const Redux = () => {
               let bg = x.id % 2 === 0 ? "#B1C4FB" : "";
               let updateStudent = () => {
                 dispatch(findByIdStudent({ id: x.id }))
-                  .then(res => navigate("/updateStudent", { state: { data: res.payload } }))
+                  .then(res => {console.log(res.payload); navigate("/updateStudent", { state: { data: res.payload } })})
                   .catch(err => console.log(err))
               }
               let deleteStudents = () => {
