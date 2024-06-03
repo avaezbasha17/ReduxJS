@@ -46,7 +46,7 @@ const Redux = () => {
         })
         .catch(error => console.log(error));
     }
-  }, [debouncedSearchTerm, dispatch]);
+  }, [debouncedSearchTerm, dispatch,<AddStudent></AddStudent>]);
 
   let [orderBy, setOrderBy] = useState('');
   let [order, setOrder] = useState('asc');
@@ -82,9 +82,9 @@ const Redux = () => {
         <div>
           <AddStudent></AddStudent>
         </div>
-        <div>
-          Number of Student
-          {}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: "center", flexDirection: 'column', padding: "10px 20px -0px 20px", borderRadius: "24px", boxShadow: "5px 5px 60px black" }}>
+          <span>Number of Student</span>
+          <h1>{count}</h1>
         </div>
       </div>
       <TableContainer component={Paper} sx={{ display: 'flex', justifyContent: "center", alignItems: "center", marginTop: "20px" }}>

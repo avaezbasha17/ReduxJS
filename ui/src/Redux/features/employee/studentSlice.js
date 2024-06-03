@@ -1,22 +1,4 @@
-import {
-    FETCH_STUDENT_REQUEST,
-    FETCH_STUDENT_SUCCESS,
-    FETCH_STUDENT_FAILURE,
-    ADD_STUDENT_REQUEST,
-    ADD_STUDENT_SUCCESS,
-    ADD_STUDENT_FAILURE,
-    FIND_STUDENT_FAILURE,
-    FIND_STUDENT_REQUEST,
-    DELETE_STUDENT_REQUEST,
-    DELETE_STUDENT_SUCCESS,
-    DELETE_STUDENT_FAILURE,
-    FIND_STUDENT_BY_ID_REQUEST,
-    FIND_STUDENT_BY_ID_SUCCESS,
-    FIND_STUDENT_SUCCESS,
-    UPDATE_STUDENT_REQUEST,
-    UPDATE_STUDENT_SUCCESS
-} from './action'
-
+import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     name: "Student",
     loading: false,
@@ -24,80 +6,77 @@ const initialState = {
     error: '',
 };
 
-const studentReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case FETCH_STUDENT_REQUEST:
-        case ADD_STUDENT_REQUEST:
-        case FIND_STUDENT_REQUEST:
-        case FIND_STUDENT_BY_ID_REQUEST:
-        case UPDATE_STUDENT_REQUEST:
-        case DELETE_STUDENT_REQUEST:
-            return {
-                ...state,
-                loading: true,
-            }
-
-        case FETCH_STUDENT_SUCCESS:
-            return {
-                ...state,
-                student: action.payload,
-                loading: false,
-                error: ''
-            }
-
-        case ADD_STUDENT_SUCCESS:
-            return {
-                ...state,
-                student: [...state.student, action.payload],
-                loading: false,
-                error: ''
-            }
-
-        case FIND_STUDENT_SUCCESS:
-            return {
-                ...state,
-                student: action.payload,
-                loading: false,
-                error: ""
-            }
-
-        case DELETE_STUDENT_SUCCESS:
-            return {
-                ...state,
-                student: state.student.filter(student => student.id !== action.payload),
-                loading: false,
-                error: ''
-            }
-
-        case FIND_STUDENT_BY_ID_SUCCESS:
-            return {
-                ...state,
-                student: action.payload,
-                loading: false,
-                error: ''
-            }
-
-        case UPDATE_STUDENT_SUCCESS:
-            return {
-                ...state,
-                student: action.payload,
-                loading: false,
-                error: ''
-            }
-        case FETCH_STUDENT_FAILURE:
-        case ADD_STUDENT_FAILURE:
-        case FIND_STUDENT_FAILURE:
-        case DELETE_STUDENT_FAILURE:
-            return {
-                ...state,
-                student: [],
-                loading: false,
-                error: action.error,
-            }
-
-        default:
-            return state;
+const studentSlice = createSlice({
+    name: "Student",
+    initialState,
+    reducers: {
+        fetchStudentRequest: (state) => {
+            state.loading = true;
+        },
+        fetchStudentSuccess: (state, action) => {
+            state.loading = false;
+            state.student = action.payload;
+        },
+        fetchStudentFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
+        addStudentRequest: (state) => {
+            state.loading = true;
+        },
+        addStudentSuccess: (state, action) => {
+            state.loading = false;
+                state.student = action.payload;
+        },
+        addStudentFailure: (state, action) => {
+            state.loading = false;;
+                state.error = action.payload;
+        },
+        findStudentRequest: (state) => {
+            state.loading = true;
+        },
+        findStudentSuccess: (state, action) => {
+            state.loading = false;
+                state.student = action.payload;
+        },
+        findStudentFailure: (state, action) => {
+            state.loading=false;
+            state.student=action.payload;
+        },
+        deleteStudentRequest:(state)=>{
+            state.loading=true;
+        },
+        deleteStudentSuccess:(state,action)=>{
+            state.loading=false;
+            state.loading=action.payload;
+        },
+        deleteStudentFailure:(state,action)=>{
+            state.loading=false;
+            state.error=action.payload;
+        },
+        updateStudentRequest:(state)=>{
+            state.loading=true;
+        },
+        updateStudentSuccess:(state,action)=>{
+            state.loading=false;
+            state.student=action.payload;
+        },
+        updateStudentFailure:(state,action)=>{
+            state.loading=false;
+            state.error=action.payload;
+        },
+        findStudentByIdRequest:(state)=>{
+            state.loading=true;
+        },
+        findStudentByIdSuccess:(state,action)=>{
+            state.loading=false;
+            state.student=action.payload;
+        },
+        findStudentByIdFailure:(state,action)=>{
+            state.loading=false;
+            state.error=action.payload;
+        }
     }
-}
+})
 
-export default studentReducer;
+export default studentSlice
