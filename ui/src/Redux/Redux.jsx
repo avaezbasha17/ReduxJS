@@ -40,7 +40,7 @@ const Redux = () => {
     } else {
       dispatch(fetchStudent())
         .then(payload => {
-          console.log(payload.payload);
+          console.log(payload);
           setData(payload.payload);
           setCount(payload.payload.length);
         })
